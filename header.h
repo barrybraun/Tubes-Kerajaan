@@ -1,4 +1,3 @@
-// buat header
 #ifndef header_H
 #define header_H
 

@@ -61,7 +61,6 @@ void InsertKing(struct nbTree *pTree){
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
     birthDate.tm_mon -= 1; // tm_mon dimulai dari 0 (Januari)
     birthDate.tm_year -= 1900; // tm_year dimulai dari 1900
-
     /*Insert umur raja atau ratu*/
     printf("\n\t%c Umur: ", 175);
     scanf("%d", &temp);
@@ -101,35 +100,37 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode){
 		newNode->nb = temp->fs;
 		temp->fs = newNode;
 		return;
-	}
-	
+}
+
 	if(newNode->info.gender == temp->info.gender){
-		if(newNode->info.birthDate > temp->info.birthDate){
-			newNode->nb = temp->fs;
-			temp->fs = newNode;
-			return;
-		}
+	if(mktime(&newNode->info.birthDate) > mktime(&temp->info.birthDate)){
+	    newNode->nb = temp->fs;
+	    temp->fs = newNode;
+	    return;
 	}
+
 	
 	/*Jika prioritas newNode lebih rendah daripada fs*/
 	/*Jika newNode male*/
-	if(newNode->info.gender==MALE){
-		/*Travers hingga ketemu next brother yang umurnya lebih muda atau yang gendernya female*/
-		while(temp->nb!=NULL && temp->nb->info.gender == MALE && newNode->info.birthDate <= temp->nb->info.birthDate){
-			temp = temp->nb;
-		}
-	}
-	
-	/*Jika newNode female*/
-	if(newNode->info.gender==FEMALE){
-		/*Travers selama next brother male, kemudian travers hingga menemukan next brother yang umurnya lebih muda*/
-		while(temp->nb!=NULL && temp->nb->info.gender == MALE){
-			temp=temp->nb;
-		}
-		while(temp->nb!=NULL && newNode->info.birthDate <= temp->nb->info.birthDate){
-			temp=temp->nb;
-		}
-	}
+/*Jika newNode male*/
+if(newNode->info.gender==MALE){
+    /*Travers hingga ketemu next brother yang umurnya lebih muda atau yang gendernya female*/
+    while(temp->nb!=NULL && temp->nb->info.gender == MALE && mktime(&newNode->info.birthDate) <= mktime(&temp->nb->info.birthDate)){
+        temp = temp->nb;
+    }
+}
+
+/*Jika newNode female*/
+if(newNode->info.gender==FEMALE){
+    /*Travers selama next brother male, kemudian travers hingga menemukan next brother yang umurnya lebih muda*/
+    while(temp->nb!=NULL && temp->nb->info.gender == MALE){
+        temp=temp->nb;
+    }
+    while(temp->nb!=NULL && mktime(&newNode->info.birthDate) <= mktime(&temp->nb->info.birthDate)){
+        temp=temp->nb;
+    }
+}
+
 	
 	if(temp->nb!=NULL){ /*Jika prioritas newNode berada di tengah*/
 		newNode->nb = temp->nb;
@@ -139,4 +140,5 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode){
 	
 	/*Jika prioritas newNode paling rendah*/
 	temp->nb=newNode;
-}
+
+}}
