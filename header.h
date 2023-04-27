@@ -22,12 +22,20 @@ typedef struct royalTree{
 	nbAddr fs;
 	nbAddr nb;
 	nbAddr parent;
-	identity info;
-	identity partner;
+	struct identity info;
+//	struct identity partner;
 }nbTreeNode;
 
 struct nbTree{
     nbAddr root;
 };
+
+void nbCreate(struct nbTree *X);
+
+bool isEmpty(struct nbTree X);
+
+void InsertKing(struct nbTree *pTree);
+
+void InsertNode(struct nbTree *tRoot, nbAddr newNode);
 
 #endif
