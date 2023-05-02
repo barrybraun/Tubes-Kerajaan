@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
+#include <time.h>
 
 void nbCreate(struct nbTree *X){
-    X->root=NULL; // use -> to access struct members since X is a pointer
+    X->root=NULL;
 }
 
 bool isEmpty(struct nbTree X){
@@ -23,8 +24,6 @@ nbAddr nbCNode(nbAddr parent, nbType name, struct tm birthDate, bool gender){
         strcpy(newNode->info.name, name);
         newNode->info.birthDate=birthDate;
         newNode->info.gender=gender;
-        struct identity id;
-    	//newNode->partner=NULL; // initialize partner to NULL
     }
     return newNode;
 }
@@ -39,7 +38,7 @@ void InsertKing(struct nbTree *pTree){
     /*Insert nama*/
     printf("\n\tMasukan Identitas Raja/ Ratu:\n");
     printf("\n\t%c Nama: ", 175);
-    scanf(" %[^\n]", name); // no need to use & since name is already an array
+    scanf(" %[^\n]", &name);
 
     /*Insert jenis kelamin*/
     do{
@@ -59,17 +58,14 @@ void InsertKing(struct nbTree *pTree){
     /*Insert tanggal lahir*/
     printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
-    birthDate.tm_mon -= 1; // tm_mon dimulai dari 0 (Januari)
-    birthDate.tm_year -= 1900; // tm_year dimulai dari 1900
-    /*Insert umur raja atau ratu*/
-    printf("\n\t%c Umur: ", 175);
-    scanf("%d", &temp);
-    if(temp < 0){
-        printf("\t[x] Input tidak valid\n");
-    }else{
-        birthDate.tm_year += temp; // tambahkan umur ke tahun lahir
-    }
-
+    
+    /*Hitung umur dari birthdate*/
+    time_t now;
+    struct tm *currentTime;
+    time(&now);
+    currentTime = localtime(&now);
+    birthDate.tm_year = currentTime->tm_year - birthDate.tm_year;
+    
     /*Alokasi node*/
     king = nbCNode(NULL, name, birthDate , gender);
 
@@ -79,66 +75,68 @@ void InsertKing(struct nbTree *pTree){
     getch();
 }
 
-void InsertNode(struct nbTree *tRoot, nbAddr newNode){
-	nbAddr temp;
-	/*Jika belum ada root*/
-	if(newNode->parent==NULL){
-		tRoot->root=newNode;
-		return;
-	}
-	
-	temp=newNode->parent;
-	/*Jika tidak memiliki first son*/
-	if(temp->fs==NULL){
-		temp->fs=newNode;
-		return;
-	}
-	
-	/*Bandingkan prioritas fs dengan newNode*/
-	temp=temp->fs;
-	if(newNode->info.gender==MALE && temp->info.gender==FEMALE){
-		newNode->nb = temp->fs;
-		temp->fs = newNode;
-		return;
-}
+void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
+    nbAddr temp;
 
-	if(newNode->info.gender == temp->info.gender){
-	if(mktime(&newNode->info.birthDate) > mktime(&temp->info.birthDate)){
-	    newNode->nb = temp->fs;
-	    temp->fs = newNode;
-	    return;
-	}
-
+    /* Jika belum ada root */
+    if (newNode->parent == NULL) {
+        tRoot->root = newNode;
+        return;
+    }
 	
-	/*Jika prioritas newNode lebih rendah daripada fs*/
-	/*Jika newNode male*/
-/*Jika newNode male*/
-if(newNode->info.gender==MALE){
-    /*Travers hingga ketemu next brother yang umurnya lebih muda atau yang gendernya female*/
-    while(temp->nb!=NULL && temp->nb->info.gender == MALE && mktime(&newNode->info.birthDate) <= mktime(&temp->nb->info.birthDate)){
-        temp = temp->nb;
+    temp = newNode->parent;
+
+    /* Jika tidak memiliki first son */
+    if (temp->fs == NULL) {
+        temp->fs = newNode;
+        return;
+    }
+
+    /* Bandingkan prioritas fs dengan newNode */
+    temp = temp->fs;
+
+    if (newNode->info.gender == MALE && temp->info.gender == FEMALE) {
+        /* Jika newNode laki-laki dan fs perempuan, maka jadikan newNode sebagai first son */
+        newNode->nb = temp->fs;
+        temp->fs = newNode;
+        return;
+    }
+
+    if (newNode->info.gender == temp->info.gender) {
+        if (difftime(mktime(&newNode->info.birthDate), mktime(&temp->info.birthDate)) > 0) {
+            /* Jika newNode dan fs memiliki jenis kelamin yang sama dan newNode lebih tua dari fs, maka jadikan newNode sebagai first son */
+            newNode->nb = temp->fs;
+            temp->fs = newNode;
+            return;
+        }
+
+        /* Jika prioritas newNode lebih rendah daripada fs */
+        /* Jika newNode laki-laki */
+        if (newNode->info.gender == MALE) {
+            /* Travers hingga ketemu next brother yang umurnya lebih muda atau yang jenis kelaminnya perempuan */
+            while (temp->nb != NULL && temp->nb->info.gender == MALE && difftime(mktime(&newNode->info.birthDate), mktime(&temp->nb->info.birthDate)) <= 0) {
+                temp = temp->nb;
+            }
+        }
+
+        /* Jika newNode perempuan */
+        if (newNode->info.gender == FEMALE) {
+            /* Travers selama next brother jenis kelamin laki-laki, kemudian travers hingga menemukan next brother yang umurnya lebih muda */
+            while (temp->nb != NULL && temp->nb->info.gender == MALE) {
+                temp = temp->nb;
+            }
+            while (temp->nb != NULL && difftime(mktime(&newNode->info.birthDate), mktime(&temp->nb->info.birthDate)) <= 0) {
+                temp = temp->nb;
+            }
+        }
+
+        if (temp->nb != NULL) { /* Jika prioritas newNode berada di tengah */
+            newNode->nb = temp->nb;
+            temp->nb = newNode;
+            return;
+        }
+
+        /* Jika prioritas newNode paling rendah */
+        temp->nb = newNode;
     }
 }
-
-/*Jika newNode female*/
-if(newNode->info.gender==FEMALE){
-    /*Travers selama next brother male, kemudian travers hingga menemukan next brother yang umurnya lebih muda*/
-    while(temp->nb!=NULL && temp->nb->info.gender == MALE){
-        temp=temp->nb;
-    }
-    while(temp->nb!=NULL && mktime(&newNode->info.birthDate) <= mktime(&temp->nb->info.birthDate)){
-        temp=temp->nb;
-    }
-}
-
-	
-	if(temp->nb!=NULL){ /*Jika prioritas newNode berada di tengah*/
-		newNode->nb = temp->nb;
-	    temp->nb = newNode;
-	    return;
-	} 
-	
-	/*Jika prioritas newNode paling rendah*/
-	temp->nb=newNode;
-
-}}
