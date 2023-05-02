@@ -64,11 +64,10 @@ void InsertKing(struct nbTree *pTree){
     struct tm *currentTime;
     time(&now);
     currentTime = localtime(&now);
-    birthDate.tm_year = currentTime->tm_year - birthDate.tm_year;
+    birthDate.tm_year = 2023-birthDate.tm_year;
     
     /*Alokasi node*/
     king = nbCNode(NULL, name, birthDate , gender);
-
     /*Insert ke tree*/
     InsertNode(pTree, king);
     printf("\n\t[o] Raja/ ratu berhasil ditambahkan");
