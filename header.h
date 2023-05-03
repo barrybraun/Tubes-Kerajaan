@@ -11,6 +11,7 @@
 
 typedef char nbType[20];
 typedef struct royalTree *nbAddr;
+typedef struct pair *pairAddr;
 
 struct identity{
     nbType name;
@@ -23,13 +24,17 @@ typedef struct royalTree{
 	nbAddr nb;
 	nbAddr parent;
 	struct identity info;
-	struct identity partner;
+	pairAddr partner;
 }nbTreeNode;
 
 struct nbTree{
     nbAddr root;
 };
 
+typedef struct pair{
+	struct identity info;
+}nbPairNode;
+	
 void nbCreate(struct nbTree *X);
 
 void nbPrint(nbAddr node);
