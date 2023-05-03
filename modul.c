@@ -13,6 +13,26 @@ bool isEmpty(struct nbTree X){
     return (X.root==NULL);
 }
 
+nbAddr nbSearch(nbAddr root, nbType src){
+	nbAddr nSrc;
+	if (root!=NULL){
+		if (strcmp(root->info.name, src)==0){
+			return root;
+		}
+		if(root->partner!=NULL){
+			if(strcmp(root->partner->info.name, src)==0){
+				return root;
+			}
+		}
+		nSrc=nbSearch(root->fs,src);
+		if (nSrc==NULL)
+			return nbSearch(root->nb,src);
+		else
+			return nSrc;
+	}
+	return NULL;
+}
+
 nbAddr nbCNode(nbAddr parent, nbType name, struct tm birthDate, bool gender){
     nbAddr newNode;
     newNode=(nbAddr) malloc(sizeof(nbTreeNode));
