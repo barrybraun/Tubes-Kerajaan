@@ -60,10 +60,6 @@ void InsertKing(struct nbTree *pTree){
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
     
     /*Hitung umur dari birthdate*/
-    time_t now;
-    struct tm *currentTime;
-    time(&now);
-    currentTime = localtime(&now);
     birthDate.tm_year = 2023-birthDate.tm_year;
     
     /*Alokasi node*/
@@ -138,4 +134,61 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
         /* Jika prioritas newNode paling rendah */
         temp->nb = newNode;
     }
+    
+/*void insertPartner(struct nbTree *pTree){
+    nbAddr partner;
+    nbType name;
+    int temp;
+    struct tm birthDate;
+    bool gender;
+
+    //Insert nama
+    printf("\n\tMasukan Identitas Pasangan");
+    printf("\n\t%c Nama: ", 175);
+    scanf(" %[^\n]", &name);
+
+    //Insert tanggal lahir
+    do{
+	printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
+    scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
+    
+    //Hitung umur dari birthdate
+    birthDate.tm_year = 2023-birthDate.tm_year;
+    if(birthDate.tm_year < 19){
+    	printf("Umur Pasangan kurang");
+	}else{
+		break;
+	}
+    }while(1);
+
+    
+    //Alokasi node
+    partner = nbCNode(NULL, name, birthDate , gender);
+    //Insert ke tree
+    printf("\n\t[o] Pasangan berhasil ditambahkan");
+    getch();
+
+}*/
+
+void nbPrint(nbAddr node) {
+    if (node == NULL) return;
+
+    printf("\t%c Nama: %s\n", 175, node->info.name);
+    printf("\t  Jenis kelamin: %s\n", node->info.gender == MALE ? "Pria" : "Wanita");
+    printf("\t  Tanggal lahir: %d-%d-%d\n", node->info.birthDate.tm_mday, node->info.birthDate.tm_mon, node->info.birthDate.tm_year);
+
+    if (node->fs != NULL) {
+        printf("\t  Anak-anak:\n");
+        printTree(node->fs);
+    }
+
+    if (node->nb != NULL) {
+        printf("\t  Saudara kandung:\n");
+        printTree(node->nb);
+    }
+   
 }
+}
+
+
+

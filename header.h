@@ -1,3 +1,4 @@
+// buat header
 #ifndef header_H
 #define header_H
 
@@ -22,7 +23,7 @@ typedef struct royalTree{
 	nbAddr nb;
 	nbAddr parent;
 	struct identity info;
-//	struct identity partner;
+	struct identity partner;
 }nbTreeNode;
 
 struct nbTree{
@@ -31,10 +32,14 @@ struct nbTree{
 
 void nbCreate(struct nbTree *X);
 
+void nbPrint(nbAddr node);
+
 bool isEmpty(struct nbTree X);
 
 void InsertKing(struct nbTree *pTree);
 
 void InsertNode(struct nbTree *tRoot, nbAddr newNode);
+
+void insertPartner(struct nbTree *pTree);
 
 #endif
