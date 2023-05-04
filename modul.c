@@ -244,40 +244,6 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
     }
 }
     
-/*void insertPartner(struct nbTree *pTree){
-    nbAddr partner;
-    nbType name;
-    int temp;
-    struct tm birthDate;
-    bool gender;
-
-    //Insert nama
-    printf("\n\tMasukan Identitas Pasangan");
-    printf("\n\t%c Nama: ", 175);
-    scanf(" %[^\n]", &name);
-
-    //Insert tanggal lahir
-    do{
-	printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
-    scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
-    
-    //Hitung umur dari birthdate
-    birthDate.tm_year = 2023-birthDate.tm_year;
-    if(birthDate.tm_year < 19){
-    	printf("Umur Pasangan kurang");
-	}else{
-		break;
-	}
-    }while(1);
-
-    
-    //Alokasi node
-    partner = nbCNode(NULL, name, birthDate , gender);
-    //Insert ke tree
-    printf("\n\t[o] Pasangan berhasil ditambahkan");
-    getch();
-
-}*/
 
 void InsertFamilyMember(struct nbTree *pTree){
 	nbAddr parentNode, newMemberNode;
@@ -321,19 +287,9 @@ void InsertFamilyMember(struct nbTree *pTree){
     printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
     birthDate.tm_year = 2023-birthDate.tm_year;
-    
-//		printf("\n\tUmur anak minimal 19 tahun lebih muda dari kedua orang tua\n");
-//		printf("\n\t%c Masukan umur: ", 175);
-//		scanf(" %d", &age);
-//		if(age >= 1 && age <= parentNode->info.age - 19 && age <= parentNode->partner->info.age - 19){ //Umur minimal 19 tahun lebih muda dari parent
-//			break;
-//		}else{
-//			printf("\t[x] Input tidak valid\n");
-//		}
-	}while(1);
 
 	/*Insert jenis kelamin*/
-	do{
+	
 		printf("\n\t%c Pilih jenis kelamin\n", 175);
 		printf("\t  0. Wanita\n");
 		printf("\t  1. Pria\n");
@@ -358,10 +314,20 @@ void InsertFamilyMember(struct nbTree *pTree){
 
 void nbPrint(nbAddr node) {
     if (node == NULL) return;
-
     printf("\t%c Nama: %s\n", 175, node->info.name);
     printf("\t  Jenis kelamin: %s\n", node->info.gender == MALE ? "Pria" : "Wanita");
     printf("\t  Umur : %d\n", node->info.birthDate.tm_year);
+    	if (node->partner == NULL){
+    		printf("\t  Tidak Memiliki Pasangan\n");
+    	}else{
+    		printf("\t  Pasangan : %s\n",node->partner->info.name);	
+		}
+		
+		if (node->parent == NULL){
+			printf("\t  Merupakan Root\n");
+		}else{
+			printf("\t  Parent adalah : %s\n",node->parent->info.name);
+		}
 
     /* Cek apakah node memiliki first son */
     if (node->fs != NULL) {
@@ -376,18 +342,18 @@ void nbPrint(nbAddr node) {
     }
 }
 
-void DeleteNode(nbTree *pTree) {
+void DeleteNode(struct nbTree *pTree) {
     char name[30];
     printf("\n\tMasukkan nama orang yang ingin dihapus: ");
     scanf(" %[^\n]", name);
-    nbAddr toDelete = nbSearch(tree->root, name);
+    nbAddr toDelete = nbSearch(pTree->root, name);
 
     if (toDelete == NULL) {
         printf("\t[x] Orang dengan nama tersebut tidak ditemukan.\n");
         return;
     }
 
-    if (toDelete == tree->root && toDelete->nb == NULL && toDelete->fs == NULL) {
+    if (toDelete == pTree->root && toDelete->nb == NULL && toDelete->fs == NULL) {
         printf("\t[x] Tidak bisa menghapus raja/raja dari pohon keluarga.\n");
         return;
     }

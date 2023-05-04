@@ -57,4 +57,6 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode);
 
 void insertPartner(struct nbTree *pTree);
 
+void DeleteNode(struct nbTree *pTree);
+
 #endif

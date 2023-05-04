@@ -23,6 +23,7 @@ int main(){
 		}
 		printf("\n\n\n\t1. Insert Partner");
 		printf("\n\t2. Insert Anggota Keluarga");
+		printf("\n\t3. Hapus Anggota");
 		printf("\n\n\tPilihan %c ", 175);
 		fflush(stdin);
 		scanf("%c", &tombol);
@@ -34,6 +35,10 @@ int main(){
 			case '2' :
 				system("cls");
 				InsertFamilyMember(&pTree);
+				break;
+			case '3' :
+				system("cls");
+				DeleteNode(&pTree);
 				break;
 		}
 	} while (tombol != 0);
