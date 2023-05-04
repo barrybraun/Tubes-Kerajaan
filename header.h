@@ -35,6 +35,16 @@ typedef struct pair{
 	struct identity info;
 }nbPairNode;
 	
+nbAddr nbCNode(nbAddr parent, nbType name, struct tm birthDate, bool gender);
+
+nbAddr nbSearch(nbAddr root, nbType src);
+
+pairAddr nbCPartnerNode(nbType name, struct tm birthDate, bool gender);
+
+void InsertVPartner(struct nbTree *pTree);
+
+void InsertPartner(nbAddr familyMember, pairAddr partner);
+
 void nbCreate(struct nbTree *X);
 
 void nbPrint(nbAddr node);

@@ -5,7 +5,7 @@
 int main(){
 	struct nbTree pTree;
 	char str[]="";
-	int tombol;
+	char tombol;
 	nbCreate(&pTree);
 	nbAddr node, king;
 	InsertKing(&pTree);
@@ -21,7 +21,21 @@ int main(){
 		} else {
 			nbPrint(pTree.root);
 		}
-		printf("/n/n/n/t1. Insert Partner");
+		printf("\n\n\n\t1. Insert Partner");
+		printf("\n\t2. Insert Anggota Keluarga");
+		printf("\n\n\tPilihan %c ", 175);
+		fflush(stdin);
+		scanf("%c", &tombol);
+		switch(tombol) {
+			case '1' :
+				system("cls");
+				InsertVPartner(&pTree);
+				break;
+			case '2' :
+				system("cls");
+				InsertFamilyMember(&pTree);
+				break;
+		}
 	} while (tombol != 0);
 	return 0;
 }	

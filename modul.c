@@ -44,8 +44,22 @@ nbAddr nbCNode(nbAddr parent, nbType name, struct tm birthDate, bool gender){
         strcpy(newNode->info.name, name);
         newNode->info.birthDate=birthDate;
         newNode->info.gender=gender;
+        newNode->partner = 0;
     }
     return newNode;
+}
+
+pairAddr nbCPartnerNode(nbType name, struct tm birthDate, bool gender){
+	pairAddr   newNode;
+	//int age;
+	newNode = (pairAddr) malloc(sizeof(nbPairNode));
+
+	if (newNode != NULL){
+		strcpy(newNode->info.name, name);
+		newNode->info.birthDate = birthDate;
+		newNode->info.gender = gender;
+	}
+	return newNode;
 }
 
 void InsertKing(struct nbTree *pTree){
@@ -88,6 +102,80 @@ void InsertKing(struct nbTree *pTree){
     InsertNode(pTree, king);
     printf("\n\t[o] Raja/ ratu berhasil ditambahkan");
     getch();
+}
+
+void InsertVPartner(struct nbTree *pTree){
+	nbAddr srcNode;
+	pairAddr partner;
+	bool gender;
+	nbType name, partnerName;
+	int age;
+	struct tm birthDate;
+
+	/*Search node*/
+	printf("\n\n\tMasukan 'q' untuk kembali\n");
+	printf("\tUmur minimal untuk menikah adalah 18 tahun\n");
+	do{
+		printf("\n\t%c Nama anggota keluarga yang akan menikah: ", 175);
+		scanf(" %[^\n]", &name);
+		if(strcmp(name, "q")==0){
+			return;
+		}
+		srcNode=nbSearch((*pTree).root, name);
+
+		if(srcNode == NULL){
+			printf("\t[x] Anggota keluarga tidak ditemukan\n");
+		}else if(srcNode->partner != NULL){
+			printf("\t[x] Anggota keluarga tersebut sudah memiliki pasangan\n");
+		//}else if(srcNode->info.birthDate < 18){
+		//	printf("\t[x] Anggota keluarga tersebut masih dibawah umur\n");
+		}else{
+			break;
+		}
+	}while(1);
+
+	/*Get gender*/
+	if(srcNode->info.gender == 1){
+		gender = false;
+	}else{
+		gender = true;
+	}
+
+	/*Insert identitas partner*/
+	do{
+		printf("\n\t%c Masukan nama pasangan: ", 175);
+		scanf(" %[^\n]", &partnerName);
+		if(nbSearch((*pTree).root, partnerName)!=NULL){ /*Check jika ada node yg memiliki nama yg sama di tree*/
+			printf("\t[x] Nama orang tersebut sudah ada pada pohon keluarga\n");
+		}else{
+			break;
+		}
+	}while(1);
+	do{
+		fflush(stdin);
+		printf("\n\tUmur pasangan minimal 18 tahun\n");
+		printf("\t%c Masukan usia pasangan: ", 175);
+		scanf(" %d", &age);
+		birthDate.tm_year = age;
+
+		if(age < 18){
+			printf("\t[x] Pasangan masih dibawah umur\n");
+		}else{
+			break;
+		}
+	}while(true);
+
+	/*Alokasi partner*/
+	partner = nbCPartnerNode(partnerName, birthDate, gender);
+
+	/*Insert ke tree*/
+	InsertPartner(srcNode, partner);
+	printf("\n\t[o] Pasangan berhasil ditambahkan");
+	getch();
+}
+
+void InsertPartner(nbAddr familyMember, pairAddr partner){
+	familyMember->partner = partner;
 }
 
 void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
@@ -154,6 +242,7 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
         /* Jika prioritas newNode paling rendah */
         temp->nb = newNode;
     }
+}
     
 /*void insertPartner(struct nbTree *pTree){
     nbAddr partner;
