@@ -322,6 +322,12 @@ void nbPrint(nbAddr node) {
     	}else{
     		printf("\t  Pasangan : %s\n",node->partner->info.name);	
 		}
+		
+		if (node->parent == NULL){
+			printf("\t  Merupakan Root\n");
+		}else{
+			printf("\t  Parent adalah : %s\n",node->parent->info.name);
+		}
 
     /* Cek apakah node memiliki first son */
     if (node->fs != NULL) {
