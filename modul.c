@@ -318,11 +318,22 @@ void InsertFamilyMember(struct nbTree *pTree){
 
 	/*Alokasi node*/
 	newMemberNode = nbCNode(parentNode, name, birthDate, gender);
-
+	if(newMemberNode->info.birthDate.tm_year-parentNode->info.birthDate.tm_year<=18){
+		printf("\t\nSelisih Umur Anak Dengan Orang Tua Kurang dari 18 tahun\n\n");
+		system("pause");
+		system("cls");
+		InsertFamilyMember(pTree);
+	}else if(newMemberNode->info.birthDate.tm_year-parentNode->partner->info.birthDate.tm_year<=18){
+		printf("\n\tSelisih Umur Anak Dengan Orang Tua Kurang dari 18 tahun\n\n");
+		system("pause");
+		system("cls");
+		InsertFamilyMember(pTree);
+	}else{
 	/*Insert ke tree*/
 	InsertNode(pTree, newMemberNode);
 	printf("\n\t[o] Anggota keluarga berhasil ditambahkan");
 	getch();
+}
 }
 
 void nbPrint(nbAddr node) {
