@@ -90,18 +90,31 @@ void InsertKing(struct nbTree *pTree){
     }while(1);
 
     /*Insert tanggal lahir*/
+    printf("\n\t  RANGE UMUR RAJA/RATU : 50 TAHUN-80 TAHUN (1943-1973)");
     printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
     
     /*Hitung umur dari birthdate*/
     birthDate.tm_year = 2023-birthDate.tm_year;
-    
+    if(birthDate.tm_year<50) {
+    	printf("\n\t  Umur Raja/Ratu Tidak Memenuhi Kualifikasi Umur\n\n");
+    	system("pause");
+    	system("cls");
+		InsertKing(pTree);
+	}
+	 if(birthDate.tm_year>80 ) {
+    	printf("\n\t  Umur Raja/Ratu Tidak Memenuhi Kualifikasi Umur\n\n");
+    	system("pause");
+    	system("cls");
+		InsertKing(pTree);
+	}else{
     /*Alokasi node*/
     king = nbCNode(NULL, name, birthDate , gender);
     /*Insert ke tree*/
     InsertNode(pTree, king);
-    printf("\n\t[o] Raja/ ratu berhasil ditambahkan");
+    printf("\n\t  Raja/ ratu berhasil ditambahkan");
     getch();
+}
 }
 
 void InsertVPartner(struct nbTree *pTree){

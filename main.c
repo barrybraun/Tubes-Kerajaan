@@ -12,7 +12,7 @@ int main(){
 	do {	
 		king = pTree.root;
 		if((!isEmpty) && (king->info.birthDate.tm_year >= 80)){
-        	deleteNode(&king, &pTree);
+        	deleteNode(&pTree);
 		}
 		system("CLS");
 		printf("\n\n\tKeadaan Pohon Keluarga:\n");
