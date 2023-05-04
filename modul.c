@@ -287,19 +287,9 @@ void InsertFamilyMember(struct nbTree *pTree){
     printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
     birthDate.tm_year = 2023-birthDate.tm_year;
-    
-//		printf("\n\tUmur anak minimal 19 tahun lebih muda dari kedua orang tua\n");
-//		printf("\n\t%c Masukan umur: ", 175);
-//		scanf(" %d", &age);
-//		if(age >= 1 && age <= parentNode->info.age - 19 && age <= parentNode->partner->info.age - 19){ //Umur minimal 19 tahun lebih muda dari parent
-//			break;
-//		}else{
-//			printf("\t[x] Input tidak valid\n");
-//		}
-	}while(1);
 
 	/*Insert jenis kelamin*/
-	do{
+	
 		printf("\n\t%c Pilih jenis kelamin\n", 175);
 		printf("\t  0. Wanita\n");
 		printf("\t  1. Pria\n");
