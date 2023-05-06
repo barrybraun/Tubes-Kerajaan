@@ -15,9 +15,6 @@ int main(){
 	InsertKing(&pTree);
 	do {	
 		king = pTree.root;
-		if((!isEmpty) && (king->info.birthDate.tm_year >= 80)){
-        	deleteNode(&pTree);
-		}
 		system("CLS");
 		printf("\n\n\tKeadaan Pohon Keluarga:\n");
 		if (isEmpty(pTree)){ 
@@ -34,6 +31,8 @@ int main(){
 		switch(tombol) {
 			case '1' :
 				system("cls");
+				PrintFromFile("assets/king.txt");
+				printf("\n\n");
 				InsertVPartner(&pTree);
 				break;
 			case '2' :

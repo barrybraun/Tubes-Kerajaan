@@ -114,7 +114,7 @@ void InsertKing(struct nbTree *pTree){
     InsertNode(pTree, king);
     printf("\n\t  Raja/ ratu berhasil ditambahkan");
     getch();
-}
+	}
 }
 
 void InsertVPartner(struct nbTree *pTree){

@@ -73,4 +73,5 @@ void DeleteNode(struct nbTree *pTree);
 
 /* Dibuat oleh Barry Arganeza*/
 void PrintFromFile(const char* location);
+
 #endif
