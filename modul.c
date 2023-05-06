@@ -156,7 +156,7 @@ void InsertVPartner(struct nbTree *pTree){
 
 	/*Insert identitas partner*/
 	do{
-		printf("\n\t%c Masukan nama pasangan: ", 175);
+		printf("\n\t%c Masukan nama pasangan: ", 175);	
 		scanf(" %[^\n]", &partnerName);
 		if(nbSearch((*pTree).root, partnerName)!=NULL){ /*Check jika ada node yg memiliki nama yg sama di tree*/
 			printf("\t[x] Nama orang tersebut sudah ada pada pohon keluarga\n");
@@ -318,12 +318,12 @@ void InsertFamilyMember(struct nbTree *pTree){
 
 	/*Alokasi node*/
 	newMemberNode = nbCNode(parentNode, name, birthDate, gender);
-	if(newMemberNode->info.birthDate.tm_year-parentNode->info.birthDate.tm_year<=18){
+	if(parentNode->info.birthDate.tm_year - newMemberNode->info.birthDate.tm_year <=18){
 		printf("\t\nSelisih Umur Anak Dengan Orang Tua Kurang dari 18 tahun\n\n");
 		system("pause");
 		system("cls");
 		InsertFamilyMember(pTree);
-	}else if(newMemberNode->info.birthDate.tm_year-parentNode->partner->info.birthDate.tm_year<=18){
+	}else if(parentNode->partner->info.birthDate.tm_year - newMemberNode->info.birthDate.tm_year <= 18){
 		printf("\n\tSelisih Umur Anak Dengan Orang Tua Kurang dari 18 tahun\n\n");
 		system("pause");
 		system("cls");
@@ -333,7 +333,7 @@ void InsertFamilyMember(struct nbTree *pTree){
 	InsertNode(pTree, newMemberNode);
 	printf("\n\t[o] Anggota keluarga berhasil ditambahkan");
 	getch();
-}
+	}
 }
 
 void nbPrint(nbAddr node) {
@@ -396,4 +396,16 @@ void DeleteNode(struct nbTree *pTree) {
 
     printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
     return;
+}
+
+void PrintFromFile(const char* location){
+	FILE *read;
+	char c;
+
+	read=fopen(location, "rt");
+	while((c=fgetc(read))!=EOF){
+		printf("%c", c);
+	}
+
+	fclose(read);
 }

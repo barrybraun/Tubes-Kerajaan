@@ -8,6 +8,10 @@ int main(){
 	char tombol;
 	nbCreate(&pTree);
 	nbAddr node, king;
+	PrintFromFile("assets/opening.txt");
+	printf("\n\n");
+	system("pause");
+	system("cls");
 	InsertKing(&pTree);
 	do {	
 		king = pTree.root;
@@ -16,7 +20,7 @@ int main(){
 		}
 		system("CLS");
 		printf("\n\n\tKeadaan Pohon Keluarga:\n");
-		if (isEmpty(pTree)){
+		if (isEmpty(pTree)){ 
 			printf("\tTree kosong");
 		} else {
 			nbPrint(pTree.root);
