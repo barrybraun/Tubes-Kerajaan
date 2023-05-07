@@ -256,7 +256,6 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
         temp->nb = newNode;
     }
 }
-    
 
 void InsertFamilyMember(struct nbTree *pTree){
 	nbAddr parentNode, newMemberNode;
@@ -396,6 +395,14 @@ void DeleteNode(struct nbTree *pTree) {
 
     printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
     return;
+}
+
+void nbDNode(nbAddr *Node)
+{
+	(*Node)->fs=NULL;
+	(*Node)->nb=NULL;
+	(*Node)->parent=NULL;
+	free(*Node);
 }
 
 void PrintFromFile(const char* location){
