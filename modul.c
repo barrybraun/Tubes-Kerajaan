@@ -68,6 +68,8 @@ void InsertKing(struct nbTree *pTree){
     int temp;
     struct tm birthDate;
     bool gender;
+    struct tm *locTime;
+    time_t Tval;
 
     /*Insert nama*/
     printf("\n\tMasukan Identitas Raja/ Ratu:\n");
@@ -95,7 +97,10 @@ void InsertKing(struct nbTree *pTree){
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
     
     /*Hitung umur dari birthdate*/
-    birthDate.tm_year = 2023-birthDate.tm_year;
+    Tval = time(NULL);
+    locTime = localtime(&Tval);
+    locTime->tm_year= 1900 + locTime->tm_year; // Ditambah 1900, karena tahun dimulai dari 1900
+    birthDate.tm_year = locTime->tm_year-birthDate.tm_year;
     if(birthDate.tm_year<50) {
     	printf("\n\t  Umur Raja/Ratu Tidak Memenuhi Kualifikasi Umur\n\n");
     	system("pause");
