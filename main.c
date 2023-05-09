@@ -37,6 +37,7 @@ int main(){
 				break;
 			case '2' :
 				system("cls");
+				PrintFromFile("assets/newmember.txt");
 				InsertFamilyMember(&pTree);
 				break;
 			case '3' :
