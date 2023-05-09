@@ -390,11 +390,13 @@ void DeleteNode(struct nbTree *pTree) {
     nbAddr Node = nbSearch(pTree->root, name);
     if (Node == NULL) {
         printf("\t[x] Orang dengan nama tersebut tidak ditemukan.\n");
+        system("pause");
         return;
     }
 
     if (Node == pTree->root && Node->nb == NULL && Node->fs == NULL) {
-        printf("\t[x] Tidak bisa menghapus raja/raja dari pohon keluarga.\n");
+        printf("\t[x] Tidak bisa menghapus raja / ratu dari pohon keluarga.\n\n\n");
+        system("pause");
         return;
     }
 
@@ -409,6 +411,7 @@ void DeleteNode(struct nbTree *pTree) {
         saveToFile("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
+        system("pause");
         return;
     }
 
@@ -419,6 +422,7 @@ void DeleteNode(struct nbTree *pTree) {
         saveToFile("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
+        system("pause");
         return;
     }
 
@@ -480,6 +484,7 @@ void PrintDeletedNodes(const char* location) {
     Tval = time(NULL);
     locTime = localtime(&Tval);
     fp = fopen(location, "r");
+    system("cls");
     if (fp != NULL) {
         printf("Daftar Raja Pendahulu:\n");
         while (fscanf(fp, "%[^;];%d-%d-%d;%d\n", name, &day, &month, &year, &gender) != EOF) {

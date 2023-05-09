@@ -46,7 +46,9 @@ int main(){
 				DeleteNode(&pTree);
                 break;
 			case '4' :
-				PrintDeletedNodes("deleted_node.txt");
+				//PrintDeletedNodes("deleted_node.txt");
+				system("cls");
+				//PrintFromFile("deleted_node.txt");
 				break;
 		}
 	} while (tombol != 0);
