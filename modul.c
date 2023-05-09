@@ -269,6 +269,8 @@ void InsertFamilyMember(struct nbTree *pTree){
 	int age;
 	bool gender;
 	struct tm birthDate;
+	struct tm *locTime;
+    time_t Tval;
 
 	/*Cari parent*/
 	printf("\n\tMasukan 'q' untuk kembali\n");
@@ -303,7 +305,10 @@ void InsertFamilyMember(struct nbTree *pTree){
 	do{
     printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
-    birthDate.tm_year = 2023-birthDate.tm_year;
+    Tval = time(NULL);
+    locTime = localtime(&Tval);
+    locTime->tm_year= 1900 + locTime->tm_year; // Ditambah 1900, karena tahun dimulai dari 1900
+    birthDate.tm_year = locTime->tm_year-birthDate.tm_year;
 
 	/*Insert jenis kelamin*/
 	
