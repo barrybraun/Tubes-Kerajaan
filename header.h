@@ -74,10 +74,13 @@ void DeleteNode(struct nbTree *pTree);
 /* Dibuat oleh Barry Arganeza*/
 void PrintFromFile(const char* location);
 
+/* Dibuat oleh Aqila Ghifari Wandana*/
 void PrintDeletedNodes(const char* location);
 
+/* Dibuat oleh Aqila Ghifari Wandana*/
 void saveDeletedNode(const char* location, nbAddr deletedNode);
 
+/* Dibuat oleh Aqila Ghifari Wandana*/
 void saveToFile(const char* location, nbAddr node);
 
 

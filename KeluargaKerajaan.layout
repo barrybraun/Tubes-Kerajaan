@@ -2,7 +2,7 @@
 <<<<<<< HEAD
 Order=0,2,1
 <<<<<<< HEAD
-Focused=2
+Focused=1
 =======
 Focused=1
 >>>>>>> 9a0868811f846e69cb69aeb74111e5b4bd749dec
@@ -13,19 +13,19 @@ Focused=-1
 [Editor_0]
 CursorCol=24
 CursorRow=46
-TopLine=24
+TopLine=18
 LeftChar=1
 [Editor_1]
 <<<<<<< HEAD
 <<<<<<< HEAD
-CursorCol=1
-CursorRow=42
-TopLine=27
+CursorCol=39
+CursorRow=83
+TopLine=51
 LeftChar=1
 [Editor_2]
 CursorCol=6
 CursorRow=491
-TopLine=463
+TopLine=433
 =======
 CursorCol=59
 CursorRow=46
