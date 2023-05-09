@@ -388,7 +388,6 @@ void DeleteNode(struct nbTree *pTree) {
     printf("\n\tMasukkan nama orang yang ingin dihapus: ");
     scanf(" %[^\n]", name);
     nbAddr Node = nbSearch(pTree->root, name);
-
     if (Node == NULL) {
         printf("\t[x] Orang dengan nama tersebut tidak ditemukan.\n");
         return;
@@ -406,6 +405,8 @@ void DeleteNode(struct nbTree *pTree) {
         } else {
             parent->fs = NULL;
         }
+        saveDeletedNode("deleted_node.txt", Node);
+        saveToFile("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
         return;
@@ -414,6 +415,8 @@ void DeleteNode(struct nbTree *pTree) {
     if (Node == pTree->root) {
         pTree->root = Node->fs;
         Node->fs->parent = NULL;
+        saveDeletedNode("deleted_node.txt", Node);
+        saveToFile("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
         return;
@@ -442,4 +445,48 @@ void PrintFromFile(const char* location){
 	}
 
 	fclose(read);
+}
+
+
+void saveToFile(const char* location, nbAddr node) {
+    FILE *fp;
+    fp = fopen(location, "a");
+    if (fp != NULL) {
+        fprintf(fp, "%s;%d-%d-%d;%d;", node->info.name, node->info.birthDate.tm_mday, node->info.birthDate.tm_mon+1, node->info.birthDate.tm_year+1900, node->info.gender);
+        if (node->partner != NULL) {
+            fprintf(fp, "%s;%d-%d-%d;%d", node->partner->info.name, node->partner->info.birthDate.tm_mday, node->partner->info.birthDate.tm_mon+1, node->partner->info.birthDate.tm_year+1900, node->partner->info.gender);
+        }
+        fprintf(fp, "\n");
+        fclose(fp);
+    }
+}
+
+void saveDeletedNode(const char* location, nbAddr deletedNode) {
+    FILE *fp;
+    fp = fopen(location, "a");
+    if (fp != NULL) {
+        fprintf(fp, "%s;%d-%d-%d;%d\n", deletedNode->info.name, deletedNode->info.birthDate.tm_mday, deletedNode->info.birthDate.tm_mon+1, deletedNode->info.birthDate.tm_year+1900, deletedNode->info.gender);
+        fclose(fp);
+    }
+}
+
+void PrintDeletedNodes(const char* location) {
+    FILE *fp;
+    char name[20];
+    int day, month, year, gender;
+    struct tm *locTime;
+    time_t Tval;
+    
+    Tval = time(NULL);
+    locTime = localtime(&Tval);
+    fp = fopen(location, "r");
+    if (fp != NULL) {
+        printf("Daftar Raja Pendahulu:\n");
+        while (fscanf(fp, "%[^;];%d-%d-%d;%d\n", name, &day, &month, &year, &gender) != EOF) {
+        	year= (locTime->tm_year-(year-1900));
+            printf("%s (%d-%d-%d) - %s\n", name, day, month, year, gender==MALE?"Laki-laki":"Perempuan");
+            getch();
+        }
+        fclose(fp);
+    }
 }
