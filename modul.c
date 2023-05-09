@@ -350,28 +350,36 @@ void nbPrint(nbAddr node) {
     printf("\t%c Nama: %s\n", 175, node->info.name);
     printf("\t  Jenis kelamin: %s\n", node->info.gender == MALE ? "Pria" : "Wanita");
     printf("\t  Umur : %d\n", node->info.birthDate.tm_year);
-    	if (node->partner == NULL){
-    		printf("\t  Tidak Memiliki Pasangan\n");
-    	}else{
-    		printf("\t  Pasangan : %s\n",node->partner->info.name);	
-		}
-		
-		if (node->parent == NULL){
-			printf("\t  Merupakan Root\n");
-		}else{
-			printf("\t  Parent adalah : %s\n",node->parent->info.name);
-		}
-
+    if (node->partner == NULL) {
+        printf("\t  Tidak Memiliki Pasangan\n");
+    } else {
+        printf("\t  Pasangan : %s\n", node->partner->info.name);    
+    }
+    if (node->parent == NULL) {
+        printf("\t  Merupakan Root\n");
+    } else {
+        printf("\t  Parent adalah : %s\n", node->parent->info.name);
+    }
     /* Cek apakah node memiliki first son */
     if (node->fs != NULL) {
         printf("\t  Anak:\n");
         nbPrint(node->fs);
     }
-
     /* Cek apakah node memiliki next brother */
-    else if (node->nb != NULL) {
+    if (node->nb != NULL) {
         printf("\t  Saudara kandung:\n");
         nbPrint(node->nb);
+    }
+    /* Cek apakah node memiliki sibling yang memiliki anak */
+    if (node->nb != NULL) {
+        nbAddr sibling = node->nb;
+        while (sibling != NULL) {
+            if (sibling->fs != NULL) {
+                printf("\t  Anak dari saudara kandung:\n");
+                nbPrint(sibling->fs);
+            }
+            sibling = sibling->nb;
+        }
     }
 }
 
