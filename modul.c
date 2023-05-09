@@ -374,33 +374,43 @@ void DeleteNode(struct nbTree *pTree) {
     char name[30];
     printf("\n\tMasukkan nama orang yang ingin dihapus: ");
     scanf(" %[^\n]", name);
-    nbAddr toDelete = nbSearch(pTree->root, name);
+    nbAddr Node = nbSearch(pTree->root, name);
 
-    if (toDelete == NULL) {
+    if (Node == NULL) {
         printf("\t[x] Orang dengan nama tersebut tidak ditemukan.\n");
         return;
     }
 
-    if (toDelete == pTree->root && toDelete->nb == NULL && toDelete->fs == NULL) {
+    if (Node == pTree->root && Node->nb == NULL && Node->fs == NULL) {
         printf("\t[x] Tidak bisa menghapus raja/raja dari pohon keluarga.\n");
         return;
     }
 
-    if (toDelete->nb == NULL && toDelete->fs == NULL) {
-        nbAddr parent = toDelete->parent;
-        if (parent->fs == toDelete) {
-            parent->fs = NULL;
-        } else {
+    if (Node->nb == NULL && Node->fs == NULL) {
+        nbAddr parent = Node->parent;
+        if (parent->nb == Node) {
             parent->nb = NULL;
+        } else {
+            parent->fs = NULL;
         }
-        free(toDelete);
+        free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
+        return;
+    }
+
+    if (Node == pTree->root) {
+        pTree->root = Node->fs;
+        Node->fs->parent = NULL;
+        free(Node);
+        printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
         return;
     }
 
     printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
     return;
 }
+
+
 
 void nbDNode(nbAddr *Node)
 {
