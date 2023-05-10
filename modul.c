@@ -50,8 +50,7 @@ nbAddr nbCNode(nbAddr parent, nbType name, struct tm birthDate, bool gender){
 }
 
 pairAddr nbCPartnerNode(nbType name, struct tm birthDate, bool gender){
-	pairAddr   newNode;
-	//int age;
+	pairAddr newNode;
 	newNode = (pairAddr) malloc(sizeof(nbPairNode));
 
 	if (newNode != NULL){
