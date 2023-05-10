@@ -408,7 +408,6 @@ void DeleteNode(struct nbTree *pTree) {
             parent->fs = NULL;
         }
         saveDeletedNode("deleted_node.txt", Node);
-        saveToFile("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
         system("pause");
@@ -419,7 +418,6 @@ void DeleteNode(struct nbTree *pTree) {
         pTree->root = Node->fs;
         Node->fs->parent = NULL;
         saveDeletedNode("deleted_node.txt", Node);
-        saveToFile("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
         system("pause");
@@ -452,7 +450,7 @@ void PrintFromFile(const char* location){
 }
 
 
-void saveToFile(const char* location, nbAddr node) {
+/*void saveToFile(const char* location, nbAddr node) {
     FILE *fp;
     fp = fopen(location, "a");
     if (fp != NULL) {
@@ -463,13 +461,13 @@ void saveToFile(const char* location, nbAddr node) {
         fprintf(fp, "\n");
         fclose(fp);
     }
-}
+}*/
 
 void saveDeletedNode(const char* location, nbAddr deletedNode) {
     FILE *fp;
     fp = fopen(location, "a");
     if (fp != NULL) {
-        fprintf(fp, "%s;%d-%d-%d;%d\n", deletedNode->info.name, deletedNode->info.birthDate.tm_mday, deletedNode->info.birthDate.tm_mon+1, deletedNode->info.birthDate.tm_year+1900, deletedNode->info.gender);
+        fprintf(fp, "%s;%d-%d-%d;%d\n", deletedNode->info.name, deletedNode->info.birthDate.tm_mday, deletedNode->info.birthDate.tm_mon, deletedNode->info.birthDate.tm_year, deletedNode->info.gender);
         fclose(fp);
     }
 }
@@ -486,10 +484,10 @@ void PrintDeletedNodes(const char* location) {
     fp = fopen(location, "r");
     system("cls");
     if (fp != NULL) {
-        printf("Daftar Raja Pendahulu:\n");
+        printf("\n\n\tDaftar Raja Pendahulu:\n");
         while (fscanf(fp, "%[^;];%d-%d-%d;%d\n", name, &day, &month, &year, &gender) != EOF) {
-        	year= (locTime->tm_year-(year-1900));
-            printf("%s (%d-%d-%d) - %s\n", name, day, month, year, gender==MALE?"Laki-laki":"Perempuan");
+        	year = 2023 - year ;
+            printf("\n\t%s - (%d-%d-%d) - %s \n" , name, day , month , year, gender==MALE?"Laki-laki":"Perempuan");
             getch();
         }
         fclose(fp);
