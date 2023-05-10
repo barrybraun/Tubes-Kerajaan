@@ -144,8 +144,6 @@ void InsertVPartner(struct nbTree *pTree){
 			printf("\t[x] Anggota keluarga tidak ditemukan\n");
 		}else if(srcNode->partner != NULL){
 			printf("\t[x] Anggota keluarga tersebut sudah memiliki pasangan\n");
-		//}else if(srcNode->info.birthDate < 18){
-		//	printf("\t[x] Anggota keluarga tersebut masih dibawah umur\n");
 		}else{
 			break;
 		}
@@ -229,8 +227,6 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
             temp->fs = newNode;
             return;
         }
-
-        /* Jika prioritas newNode lebih rendah daripada fs */
         /* Jika newNode laki-laki */
         if (newNode->info.gender == MALE) {
             /* Travers hingga ketemu next brother yang umurnya lebih muda atau yang jenis kelaminnya perempuan */
@@ -265,7 +261,6 @@ void InsertFamilyMember(struct nbTree *pTree){
 	nbAddr parentNode, newMemberNode;
 	nbType name, parentName;
 	int temp;
-	int age;
 	bool gender;
 	struct tm birthDate;
 	struct tm *locTime;
