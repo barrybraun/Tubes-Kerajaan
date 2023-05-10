@@ -352,16 +352,14 @@ void nbPrint(nbAddr node) {
     if (node->parent == NULL) {
         printf("\t  Merupakan Root\n");
     } else {
-        printf("\t  Parent adalah : %s\n", node->parent->info.name);
+        printf("\t  Parent adalah : %s\n\n", node->parent->info.name);
     }
     /* Cek apakah node memiliki first son */
     if (node->fs != NULL) {
-        printf("\t  Anak:\n");
         nbPrint(node->fs);
     }
     /* Cek apakah node memiliki next brother */
     if (node->nb != NULL) {
-        printf("\t  Saudara kandung:\n");
         nbPrint(node->nb);
     }
     /* Cek apakah node memiliki sibling yang memiliki anak */
@@ -369,7 +367,6 @@ void nbPrint(nbAddr node) {
         nbAddr sibling = node->nb;
         while (sibling != NULL) {
             if (sibling->fs != NULL) {
-                printf("\t  Anak dari saudara kandung:\n");
                 nbPrint(sibling->fs);
             }
             sibling = sibling->nb;
