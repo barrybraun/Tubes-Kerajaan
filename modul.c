@@ -486,7 +486,8 @@ void PrintDeletedNodes(const char* location) {
     if (fp != NULL) {
         printf("\n\n\tDaftar Raja Pendahulu:\n");
         while (fscanf(fp, "%[^;];%d-%d-%d;%d\n", name, &day, &month, &year, &gender) != EOF) {
-        	year = 2023 - year ;
+    		locTime->tm_year= 1900 + locTime->tm_year;
+        	year = locTime->tm_year - year ;
             printf("\n\t%s - (%d-%d-%d) - %s \n" , name, day , month , year, gender==MALE?"Laki-laki":"Perempuan");
             getch();
         }
