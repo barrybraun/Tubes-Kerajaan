@@ -32,17 +32,21 @@ int main(){
 		switch(tombol) {
 			case '1' :
 				system("cls");
+				printf("\n\n");
 				PrintFromFile("assets/king.txt");
 				printf("\n\n");
 				InsertVPartner(&pTree);
 				break;
 			case '2' :
 				system("cls");
+				printf("\n\n");
 				PrintFromFile("assets/newmember.txt");
 				InsertFamilyMember(&pTree);
 				break;
 			case '3' :
 				system("cls");
+				printf("\n\n")
+				PrintFromFile("assets/crown.txt");
 				DeleteNode(&pTree);
                 break;
 			case '4' :
