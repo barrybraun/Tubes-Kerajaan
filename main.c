@@ -45,8 +45,9 @@ int main(){
 				break;
 			case '3' :
 				system("cls");
-				printf("\n\n")
+				printf("\n\n");
 				PrintFromFile("assets/crown.txt");
+				printf("\n\n");
 				DeleteNode(&pTree);
                 break;
 			case '4' :

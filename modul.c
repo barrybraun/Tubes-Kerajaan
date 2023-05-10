@@ -431,13 +431,13 @@ void DeleteNode(struct nbTree *pTree) {
 }
 
 
-void nbDNode(nbAddr *Node)
-{
-	(*Node)->fs=NULL;
-	(*Node)->nb=NULL;
-	(*Node)->parent=NULL;
-	free(*Node);
-}
+//void nbDNode(nbAddr *Node)
+//{
+//	(*Node)->fs=NULL;
+//	(*Node)->nb=NULL;
+//	(*Node)->parent=NULL;
+//	free(*Node);
+//}
 
 void PrintFromFile(const char* location){
 	FILE *read;
