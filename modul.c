@@ -418,6 +418,7 @@ void DeleteNode(struct nbTree *pTree) {
         return;
     }
     printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
+    getch();
     return;
 }
 
