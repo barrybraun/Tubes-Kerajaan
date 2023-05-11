@@ -382,47 +382,58 @@ void nbPrint(nbAddr node) {
 
 void DeleteNode(struct nbTree *pTree) {
     char name[30];
-    printf("\n\tMasukkan nama anggota yang akan dihapus :  ");
+    printf("\n\tMasukkan nama orang yang ingin dihapus: ");
     scanf(" %[^\n]", name);
     nbAddr Node = nbSearch(pTree->root, name);
+
     if (Node == NULL) {
         printf("\t[x] Orang dengan nama tersebut tidak ditemukan.\n");
-        system("pause");
         return;
     }
 
-    if (Node == pTree->root && Node->nb == NULL && Node->fs == NULL) {
-        printf("\t[x] Tidak bisa menghapus raja / ratu dari pohon keluarga.\n\n\n");
-        system("pause");
+    if (Node == pTree->root) {
+        if (Node->nb == NULL && Node->fs == NULL) {
+            printf("\t[x] Tidak bisa menghapus raja/raja dari pohon keluarga.\n");
+            return;
+        }
+        if (Node->fs != NULL) {
+            pTree->root = Node->fs;
+            Node->fs->parent = NULL;
+        } else {
+            pTree->root = Node->nb;
+            Node->nb->parent = NULL;
+        }
+        free(Node);
+        printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
         return;
     }
 
+    nbAddr parent = Node->parent;
     if (Node->nb == NULL && Node->fs == NULL) {
-        nbAddr parent = Node->parent;
         if (parent->nb == Node) {
             parent->nb = NULL;
         } else {
             parent->fs = NULL;
         }
-        saveDeletedNode("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
-        system("pause");
         return;
     }
 
-    if (Node == pTree->root) {
-        pTree->root = Node->fs;
-        Node->fs->parent = NULL;
-        saveDeletedNode("deleted_node.txt", Node);
+    if (Node->nb != NULL && Node->fs == NULL) {
+        nbAddr sibling = Node->nb;
+        if (parent->nb == Node) {
+            parent->nb = sibling;
+        } else {
+            parent->fs = sibling;
+        }
+        sibling->parent = parent;
         free(Node);
-        printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
-        system("pause");
+        printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
         return;
     }
 
-    printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
-    return;
+    printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak.\n");
 }
 
 void PrintFromFile(const char* location){
