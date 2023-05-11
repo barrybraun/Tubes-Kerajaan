@@ -247,7 +247,7 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
             while (temp->nb != NULL && temp->nb->info.gender == MALE) {
                 temp = temp->nb;
             }
-            while (temp->nb != NULL && (&newNode->info.birthDate.tm_year > &temp->nb->info.birthDate.tm_year)) {
+            while (temp->nb != NULL && &newNode->info.birthDate.tm_year > &temp->nb->info.birthDate.tm_year) {
                 temp = temp->nb;
             }
         }
