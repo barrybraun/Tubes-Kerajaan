@@ -236,7 +236,7 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
         /* Jika newNode laki-laki */
         if (newNode->info.gender == MALE) {
             /* Travers hingga ketemu next brother yang umurnya lebih muda atau yang jenis kelaminnya perempuan */
-            while (temp->nb != NULL && temp->nb->info.gender == MALE && difftime(mktime(&newNode->info.birthDate), mktime(&temp->nb->info.birthDate)) <= 0) {
+            while (temp->nb != NULL && temp->nb->info.gender == MALE && &newNode->info.birthDate.tm_year > &temp->nb->info.birthDate.tm_year) {
                 temp = temp->nb;
             }
         }
@@ -450,7 +450,7 @@ void PrintFromFile(const char* location){
 
 void saveDeletedNode(const char* location, nbAddr deletedNode) {
     FILE *fp;
-    fp = fopen(location, "a");
+    fp = fopen(location, "a"); //menggunakan mode akses append untuk menambahkan ke file tanpa menghapus isinya
     if (fp != NULL) {
         fprintf(fp, "%s;%d-%d-%d;%d\n", deletedNode->info.name, deletedNode->info.birthDate.tm_mday, deletedNode->info.birthDate.tm_mon, deletedNode->info.birthDate.tm_year, deletedNode->info.gender);
         fclose(fp);
