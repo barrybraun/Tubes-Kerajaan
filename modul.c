@@ -385,17 +385,16 @@ void DeleteNode(struct nbTree *pTree) {
     printf("\n\tMasukkan nama orang yang ingin dihapus: ");
     scanf(" %[^\n]", name);
     nbAddr Node = nbSearch(pTree->root, name);
-
     if (Node == NULL) {
         printf("\t[x] Orang dengan nama tersebut tidak ditemukan.\n");
+        system("pause");
         return;
     }
-
     if (Node == pTree->root && Node->nb == NULL && Node->fs == NULL) {
-        printf("\t[x] Tidak bisa menghapus raja/raja dari pohon keluarga.\n");
+        printf("\t[x] Tidak bisa menghapus raja / ratu dari pohon keluarga.\n\n\n");
+        system("pause");
         return;
     }
-
     if (Node->nb == NULL && Node->fs == NULL) {
         nbAddr parent = Node->parent;
         if (parent->nb == Node) {
@@ -403,19 +402,21 @@ void DeleteNode(struct nbTree *pTree) {
         } else {
             parent->fs = NULL;
         }
+        saveDeletedNode("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
+        system("pause");
         return;
     }
-
     if (Node == pTree->root) {
         pTree->root = Node->fs;
         Node->fs->parent = NULL;
+        saveDeletedNode("deleted_node.txt", Node);
         free(Node);
         printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
+        system("pause");
         return;
     }
-
     printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
     return;
 }
