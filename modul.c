@@ -122,7 +122,7 @@ void InsertKing(struct nbTree *pTree){
     system("cls");
     printf("\n\n");
     PrintFromFile("assets/crown.txt");
-    printf("\n\t  Raja/ ratu berhasil ditambahkan");
+    printf("\n\n\t  Raja/ ratu berhasil ditambahkan");
     getch();
 	}
 }
@@ -481,4 +481,6 @@ void PrintDeletedNodes(const char* location) {
         }
         fclose(fp);
     }
+    printf("\n\n\t Tidak ada Raja Pendahulu -_-\n\n");
+    system("pause");
 }

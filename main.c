@@ -41,12 +41,13 @@ int main(){
 				system("cls");
 				printf("\n\n");
 				PrintFromFile("assets/newmember.txt");
+				printf("\n");
 				InsertFamilyMember(&pTree);
 				break;
 			case '3' :
 				system("cls");
 				printf("\n\n");
-				PrintFromFile("assets/crown.txt");
+				PrintFromFile("assets/sword and shield.txt");
 				printf("\n\n");
 				DeleteNode(&pTree);
                 break;

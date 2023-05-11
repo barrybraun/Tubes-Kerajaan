@@ -54,7 +54,7 @@ pairAddr nbCPartnerNode(nbType name, struct tm birthDate, bool gender);
 void InsertKing(struct nbTree *pTree);
 
 /* Dibuat oleh Barry Arganeza*/
-void insertFamilyMember(struct nbTree *pTree);
+void InsertFamilyMember(struct nbTree *pTree);
 
 /* Dibuat oleh Aqila Ghifari Wandana*/
 void InsertNode(struct nbTree *tRoot, nbAddr newNode);
