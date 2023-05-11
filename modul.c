@@ -227,7 +227,7 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
     }
 
     if (newNode->info.gender == temp->info.gender) {
-        if (difftime(mktime(&newNode->info.birthDate), mktime(&temp->info.birthDate)) > 0) {
+        if (&newNode->info.birthDate.tm_year > &temp->info.birthDate.tm_year) {
             /* Jika newNode dan fs memiliki jenis kelamin yang sama dan newNode lebih tua dari fs, maka jadikan newNode sebagai first son */
             newNode->nb = temp->fs;
             temp->fs = newNode;
@@ -247,7 +247,7 @@ void InsertNode(struct nbTree *tRoot, nbAddr newNode) {
             while (temp->nb != NULL && temp->nb->info.gender == MALE) {
                 temp = temp->nb;
             }
-            while (temp->nb != NULL && difftime(mktime(&newNode->info.birthDate), mktime(&temp->nb->info.birthDate)) <= 0) {
+            while (temp->nb != NULL && (&newNode->info.birthDate.tm_year > &temp->nb->info.birthDate.tm_year)) {
                 temp = temp->nb;
             }
         }
