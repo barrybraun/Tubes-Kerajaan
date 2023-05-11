@@ -12,8 +12,8 @@ Focused=-1
 >>>>>>> 0517ae807f057f21f61b883a16b257f3909feb86
 [Editor_0]
 <<<<<<< HEAD
-CursorCol=7
-CursorRow=56
+CursorCol=14
+CursorRow=51
 TopLine=20
 =======
 CursorCol=5
@@ -24,15 +24,15 @@ LeftChar=1
 [Editor_1]
 <<<<<<< HEAD
 <<<<<<< HEAD
-CursorCol=1
+CursorCol=14
 <<<<<<< HEAD
-CursorRow=48
-TopLine=46
+CursorRow=42
+TopLine=34
 LeftChar=1
 [Editor_2]
-CursorCol=10
-CursorRow=229
-TopLine=210
+CursorCol=1
+CursorRow=16
+TopLine=11
 =======
 CursorRow=69
 TopLine=43

@@ -71,12 +71,14 @@ void InsertKing(struct nbTree *pTree){
     time_t Tval;
 
     /*Insert nama*/
+    printf("\n=================================================================\n");
     printf("\n\tMasukan Identitas Raja/ Ratu:\n");
     printf("\n\t%c Nama: ", 175);
     scanf(" %[^\n]", &name);
 
     /*Insert jenis kelamin*/
     do{
+    	printf("\n=================================================================\n");
         printf("\n\t%c Pilih jenis kelamin\n", 175);
         printf("\t  0. Wanita\n");
         printf("\t  1. Pria\n");
@@ -91,6 +93,7 @@ void InsertKing(struct nbTree *pTree){
     }while(1);
 
     /*Insert tanggal lahir*/
+    printf("\n=================================================================\n");
     printf("\n\t  RANGE UMUR RAJA/RATU : 50 TAHUN-80 TAHUN (1943-1973)");
     printf("\n\t%c Tanggal lahir (dd-mm-yyyy): ", 175);
     scanf("%d-%d-%d", &birthDate.tm_mday, &birthDate.tm_mon, &birthDate.tm_year);
@@ -116,6 +119,9 @@ void InsertKing(struct nbTree *pTree){
     king = nbCNode(NULL, name, birthDate , gender);
     /*Insert ke tree*/
     InsertNode(pTree, king);
+    system("cls");
+    printf("\n\n");
+    PrintFromFile("assets/crown.txt");
     printf("\n\t  Raja/ ratu berhasil ditambahkan");
     getch();
 	}
@@ -125,8 +131,8 @@ void InsertVPartner(struct nbTree *pTree){
 	nbAddr srcNode;
 	pairAddr partner;
 	bool gender;
-	nbType name, partnerName;
 	int age;
+	nbType name, partnerName;
 	struct tm birthDate;
 
 	/*Search node*/
@@ -376,7 +382,7 @@ void nbPrint(nbAddr node) {
 
 void DeleteNode(struct nbTree *pTree) {
     char name[30];
-    printf("\n\tMasukkan nama orang yang ingin dihapus: ");
+    printf("\n\tMasukkan nama anggota yang akan dihapus :  ");
     scanf(" %[^\n]", name);
     nbAddr Node = nbSearch(pTree->root, name);
     if (Node == NULL) {
@@ -418,15 +424,6 @@ void DeleteNode(struct nbTree *pTree) {
     printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
     return;
 }
-
-
-//void nbDNode(nbAddr *Node)
-//{
-//	(*Node)->fs=NULL;
-//	(*Node)->nb=NULL;
-//	(*Node)->parent=NULL;
-//	free(*Node);
-//}
 
 void PrintFromFile(const char* location){
 	FILE *read;
