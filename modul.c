@@ -391,25 +391,13 @@ void DeleteNode(struct nbTree *pTree) {
         return;
     }
 
-    if (Node == pTree->root) {
-        if (Node->nb == NULL && Node->fs == NULL) {
-            printf("\t[x] Tidak bisa menghapus raja/raja dari pohon keluarga.\n");
-            return;
-        }
-        if (Node->fs != NULL) {
-            pTree->root = Node->fs;
-            Node->fs->parent = NULL;
-        } else {
-            pTree->root = Node->nb;
-            Node->nb->parent = NULL;
-        }
-        free(Node);
-        printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
+    if (Node == pTree->root && Node->nb == NULL && Node->fs == NULL) {
+        printf("\t[x] Tidak bisa menghapus raja/raja dari pohon keluarga.\n");
         return;
     }
 
-    nbAddr parent = Node->parent;
     if (Node->nb == NULL && Node->fs == NULL) {
+        nbAddr parent = Node->parent;
         if (parent->nb == Node) {
             parent->nb = NULL;
         } else {
@@ -420,20 +408,16 @@ void DeleteNode(struct nbTree *pTree) {
         return;
     }
 
-    if (Node->nb != NULL && Node->fs == NULL) {
-        nbAddr sibling = Node->nb;
-        if (parent->nb == Node) {
-            parent->nb = sibling;
-        } else {
-            parent->fs = sibling;
-        }
-        sibling->parent = parent;
+    if (Node == pTree->root) {
+        pTree->root = Node->fs;
+        Node->fs->parent = NULL;
         free(Node);
-        printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
+        printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
         return;
     }
 
-    printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak.\n");
+    printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
+    return;
 }
 
 void PrintFromFile(const char* location){
