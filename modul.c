@@ -409,18 +409,51 @@ void DeleteNode(struct nbTree *pTree) {
         return;
     }
     if (Node == pTree->root) {
-        pTree->root = Node->fs;
-        Node->fs->parent = NULL;
-        saveDeletedNode("deleted_node.txt", Node);
-        free(Node);
-        printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
-        system("pause");
-        return;
+        if (Node->fs->nb != NULL) {
+            nbAddr newRoot = Node->fs;
+            Node->fs = newRoot->fs;
+            if (newRoot->fs != NULL) {
+                newRoot->fs->parent = Node;
+            }
+            newRoot->fs = pTree->root->nb;
+            if (pTree->root->nb != NULL) {
+                pTree->root->nb->parent = newRoot;
+            }
+            newRoot->parent = NULL;
+            pTree->root = newRoot;
+            saveDeletedNode("deleted_node.txt", Node);
+            free(Node);
+            printf("\t[o] Orang dengan nama %s berhasil dihapus dan digantikan dengan anak sebelah.\n", name);
+            system("pause");
+            return;
+        } else {
+            pTree->root = Node->fs;
+            if (Node->fs != NULL) {
+                Node->fs->parent = NULL;
+            }
+            saveDeletedNode("deleted_node.txt", Node);
+            free(Node);
+            printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
+            system("pause");
+            return;
+        }
     }
-    printf("\t[x] Orang dengan nama tersebut tidak bisa dihapus karena masih memiliki anak/cucu.\n");
-    getch();
+    saveDeletedNode("deleted_node.txt", Node);
+    nbAddr parent = Node->parent;
+    if (parent->nb == Node) {
+        parent->nb = Node->fs;
+    } else {
+        parent->fs = Node->fs;
+    }
+    if (Node->fs != NULL) {
+        Node->fs->parent = parent;
+    }
+    free(Node);
+    printf("\t[o] Orang dengan nama %s berhasil dihapus.\n", name);
+    system("pause");
     return;
 }
+
 
 void PrintFromFile(const char* location){
 	FILE *read;
@@ -434,19 +467,6 @@ void PrintFromFile(const char* location){
 	fclose(read);
 }
 
-
-/*void saveToFile(const char* location, nbAddr node) {
-    FILE *fp;
-    fp = fopen(location, "a");
-    if (fp != NULL) {
-        fprintf(fp, "%s;%d-%d-%d;%d;", node->info.name, node->info.birthDate.tm_mday, node->info.birthDate.tm_mon+1, node->info.birthDate.tm_year+1900, node->info.gender);
-        if (node->partner != NULL) {
-            fprintf(fp, "%s;%d-%d-%d;%d", node->partner->info.name, node->partner->info.birthDate.tm_mday, node->partner->info.birthDate.tm_mon+1, node->partner->info.birthDate.tm_year+1900, node->partner->info.gender);
-        }
-        fprintf(fp, "\n");
-        fclose(fp);
-    }
-}*/
 
 void saveDeletedNode(const char* location, nbAddr deletedNode) {
     FILE *fp;
@@ -466,18 +486,18 @@ void PrintDeletedNodes(const char* location) {
     
     Tval = time(NULL);
     locTime = localtime(&Tval);
+	locTime->tm_year= 1900 + locTime->tm_year;
     fp = fopen(location, "r");
     system("cls");
     if (fp != NULL) {
         printf("\n\n\tDaftar Raja Pendahulu:\n");
-        while (fscanf(fp, "%[^;];%d-%d-%d;%d\n", name, &day, &month, &year, &gender) != EOF) {
-    		locTime->tm_year= 1900 + locTime->tm_year;
+        while (fscanf(fp, "%[^;];%d-%d-%d;%d\n", name, &day, &month, &year, &gender) != EOF) {		
         	year = locTime->tm_year - year ;
             printf("\n\t%s - (%d-%d-%d) - %s \n" , name, day , month , year, gender==MALE?"Laki-laki":"Perempuan");
-            getch();
         }
         fclose(fp);
     }
-    printf("\n\n\t Tidak ada Raja Pendahulu -_-\n\n");
+    getch();
+    printf("\n\n\t Sudah tidak ada Raja Pendahulu -_-\n\n");
     system("pause");
 }
